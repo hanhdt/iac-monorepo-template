@@ -1,8 +1,6 @@
 import * as aws from "@pulumi/aws";
 import * as apigateway from "@pulumi/aws-apigateway";
-
 import { Greeting } from "@pl-monorepo-template/functions/greeting";
-import { Storages } from "../storages";
 
 
 // Notes REST API
@@ -10,13 +8,6 @@ const notesAPI = new apigateway.RestAPI("notes-api", {
   description: "API collection for notes",
   apiKeySource: "HEADER",
   routes: [
-    {
-      path: "/",
-      target: {
-        type: "http_proxy",
-        uri: Storages.web.webBucketEndpoint,
-      },
-    },
     {
       path: "/greeting",
       method: "GET",
@@ -36,10 +27,10 @@ const usagePlan = new aws.apigateway.UsagePlan("notes-usage-plan", {
 });
 
 const usagePlanKey = new aws.apigateway.UsagePlanKey("notes-usage-plan-key", {
-  keyId: apiKey.id,
-  keyType: "API_KEY",
-  usagePlanId: usagePlan.id,
-},
+    keyId: apiKey.id,
+    keyType: "API_KEY",
+    usagePlanId: usagePlan.id,
+  },
 );
 
 export { notesAPI, apiKey, usagePlanKey };

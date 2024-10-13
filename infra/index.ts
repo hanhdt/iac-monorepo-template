@@ -5,10 +5,12 @@ const notesUploadBucketId = Storages.uploads.id;
 const webBucketId = Storages.web.webBucket.id;
 const webBucketEndpoint = Storages.web.webBucketEndpoint;
 const notesAPIUrl = APIs.notes.notesAPI.url;
+const webAPIUrl = APIs.web.webAPI.url;
 
 export {
-  notesUploadBucketId,
   notesAPIUrl,
+  webAPIUrl,
+  notesUploadBucketId,
   webBucketId,
   webBucketEndpoint,
 };
