@@ -12,4 +12,6 @@ const greetingHandler = new aws.lambda.CallbackFunction("greetingHandler", {
   callback: handler,
 });
 
-export { greetingHandler };
+export namespace Greeting {
+  export const handler = greetingHandler;
+}
