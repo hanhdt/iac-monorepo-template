@@ -1,19 +1,14 @@
-import * as aws from "@pulumi/aws";
-import * as pulumi from "@pulumi/pulumi";
+import { Storages } from "./src/storages";
+import { APIs } from "./src/apis";
 
-import { bucket } from "./src/storages";
-import { webBucket, webBucketEndpoint } from "./src/web";
-import { notesAPI, apiKey } from "./src/api";
-
-const notesBucketId = bucket.id;
-const webBucketId = webBucket.id;
-const notesAPIUrl = notesAPI.url;
-const notesAPIKey = apiKey.value;
+const notesUploadBucketId = Storages.uploads.id;
+const webBucketId = Storages.web.webBucket.id;
+const webBucketEndpoint = Storages.web.webBucketEndpoint;
+const notesAPIUrl = APIs.notes.notesAPI.url;
 
 export {
-  notesBucketId,
+  notesUploadBucketId,
+  notesAPIUrl,
   webBucketId,
   webBucketEndpoint,
-  notesAPIUrl,
-  notesAPIKey,
 };

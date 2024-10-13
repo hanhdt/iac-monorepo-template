@@ -1,6 +1,7 @@
+import * as aws from "@pulumi/aws";
 import { Example } from "@pl-monorepo-template/core/example";
 
-const greetingHandler = async (_event: any, _context: any) => {
+const handler = async (_event: any, _context: any) => {
   return {
     statusCode: 200,
     body: JSON.stringify({
@@ -8,6 +9,10 @@ const greetingHandler = async (_event: any, _context: any) => {
     }),
   }
 };
+
+const greetingHandler = new aws.lambda.CallbackFunction("greetingHandler", {
+  callback: handler,
+});
 
 export namespace Greeting {
   export const handler = greetingHandler;

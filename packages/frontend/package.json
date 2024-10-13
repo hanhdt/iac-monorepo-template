@@ -8,10 +8,7 @@
     ]
   },
   "scripts": {},
-  "dependencies": {
-    "@pulumi/aws": "^6.0.0",
-    "@pulumi/pulumi": "^3.113.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^22.7.5"
   }

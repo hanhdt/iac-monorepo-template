@@ -1,5 +1,6 @@
-name: pl-monorepo-template-infra
-description: A minimal AWS TypeScript Pulumi program
+name: monorepo-template-infra
+description: A minimal AWS TypeScript Pulumi monorepo template
+main: infra/index.ts
 runtime:
   name: nodejs
   options:

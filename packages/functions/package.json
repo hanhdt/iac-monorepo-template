@@ -8,7 +8,8 @@
     ]
   },
   "dependencies": {
-    "@pl-monorepo-template/core": "*"
+    "@pl-monorepo-template/core": "*",
+    "@pulumi/aws": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.7.5"

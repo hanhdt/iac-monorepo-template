@@ -2,11 +2,8 @@ import * as aws from "@pulumi/aws";
 import * as apigateway from "@pulumi/aws-apigateway";
 
 import { Greeting } from "@pl-monorepo-template/functions/greeting";
-import { webBucketEndpoint } from "./web";
+import { Storages } from "../storages";
 
-const greetingHandler = new aws.lambda.CallbackFunction("greetingHandler", {
-  callback: Greeting.handler,
-});
 
 // Notes REST API
 const notesAPI = new apigateway.RestAPI("notes-api", {
@@ -17,13 +14,13 @@ const notesAPI = new apigateway.RestAPI("notes-api", {
       path: "/",
       target: {
         type: "http_proxy",
-        uri: webBucketEndpoint,
+        uri: Storages.web.webBucketEndpoint,
       },
     },
     {
       path: "/greeting",
       method: "GET",
-      eventHandler: greetingHandler,
+      eventHandler: Greeting.handler,
       apiKeyRequired: true,
     }
   ]
@@ -45,5 +42,4 @@ const usagePlanKey = new aws.apigateway.UsagePlanKey("notes-usage-plan-key", {
 },
 );
 
-// Export the Notes REST API
 export { notesAPI, apiKey, usagePlanKey };

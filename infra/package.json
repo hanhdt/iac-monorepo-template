@@ -1,6 +1,13 @@
 {
   "name": "@pl-monorepo-template/infra",
-  "main": "index.ts",
+  "version": "0.0.1",
+  "exports": {
+    "./*": [
+      "./index.ts",
+      "./src/*/index.ts",
+      "./src/*.ts"
+    ]
+  },
   "dependencies": {
     "@pl-monorepo-template/functions": "^0.0.1",
     "@pulumi/aws": "^6.0.0",
