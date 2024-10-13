@@ -2,6 +2,7 @@
   "name": "@pl-monorepo-template/infra",
   "main": "index.ts",
   "dependencies": {
+    "@pl-monorepo-template/functions": "^0.0.1",
     "@pulumi/aws": "^6.0.0",
     "@pulumi/aws-apigateway": "^2.6.1",
     "@pulumi/awsx": "^2.0.2",

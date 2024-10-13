@@ -1,7 +1,7 @@
 import * as aws from "@pulumi/aws";
 import * as apigateway from "@pulumi/aws-apigateway";
 
-import { Greeting } from "../../packages/functions/src/greeting";
+import { Greeting } from "@pl-monorepo-template/functions/greeting";
 import { webBucketEndpoint } from "./web";
 
 

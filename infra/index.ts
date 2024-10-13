@@ -1,3 +1,6 @@
+import * as aws from "@pulumi/aws";
+import * as pulumi from "@pulumi/pulumi";
+
 import { bucket } from "./src/storages";
 import { webBucket, webBucketEndpoint } from "./src/web";
 import { notesAPI, apiKey } from "./src/api";
