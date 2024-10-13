@@ -1,6 +1,5 @@
 import * as aws from "@pulumi/aws";
 import * as apigateway from "@pulumi/aws-apigateway";
-import { Greeting } from "@pl-monorepo-template/functions/greeting";
 
 
 // Notes REST API
@@ -9,9 +8,16 @@ const notesAPI = new apigateway.RestAPI("notes-api", {
   apiKeySource: "HEADER",
   routes: [
     {
-      path: "/greeting",
+      path: "/notes",
       method: "GET",
-      eventHandler: Greeting.handler,
+      eventHandler: new aws.lambda.CallbackFunction("getNotesHandler", {
+        callback: async (_event: any) => {
+          return {
+            statusCode: 200,
+            body: JSON.stringify({ message: "GET /notes" }),
+          };
+        },
+      }),
       apiKeyRequired: true,
     }
   ]
@@ -27,10 +33,9 @@ const usagePlan = new aws.apigateway.UsagePlan("notes-usage-plan", {
 });
 
 const usagePlanKey = new aws.apigateway.UsagePlanKey("notes-usage-plan-key", {
-    keyId: apiKey.id,
-    keyType: "API_KEY",
-    usagePlanId: usagePlan.id,
-  },
-);
+  keyId: apiKey.id,
+  keyType: "API_KEY",
+  usagePlanId: usagePlan.id,
+});
 
 export { notesAPI, apiKey, usagePlanKey };

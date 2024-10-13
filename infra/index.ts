@@ -1,16 +1,20 @@
-import { Storages } from "./src/storages";
-import { APIs } from "./src/apis";
+import { IntroWeb } from "./src/introWeb";
+import { HelloWorld } from "./src/helloWorld";
+import { Notes } from "./src/notes";
 
-const notesUploadBucketId = Storages.uploads.id;
-const webBucketId = Storages.web.webBucket.id;
-const webBucketEndpoint = Storages.web.webBucketEndpoint;
-const notesAPIUrl = APIs.notes.notesAPI.url;
-const webAPIUrl = APIs.web.webAPI.url;
+
+const introWebBucketId = IntroWeb.html.introWebBucket.id;
+const introWebAPIUrl = IntroWeb.api.url;
+
+const helloWorldAPIUrl = HelloWorld.api.url;
+
+const notesUploadBucketId = Notes.uploads.id;
+const notesAPIUrl = Notes.api.url;
 
 export {
+  introWebBucketId,
+  introWebAPIUrl,
+  helloWorldAPIUrl,
   notesAPIUrl,
-  webAPIUrl,
   notesUploadBucketId,
-  webBucketId,
-  webBucketEndpoint,
 };

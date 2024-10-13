@@ -1,7 +1,7 @@
 import * as apigateway from "@pulumi/aws-apigateway";
-import { Storages } from "../storages";
+import { introWebBucketEndpoint } from "./introWebBucket";
 
-const webAPI = new apigateway.RestAPI("web-api", {
+const introWebAPI = new apigateway.RestAPI("web-api", {
   description: "API collection for notes",
   apiKeySource: "HEADER",
   routes: [
@@ -9,10 +9,10 @@ const webAPI = new apigateway.RestAPI("web-api", {
       path: "/",
       target: {
         type: "http_proxy",
-        uri: Storages.web.webBucketEndpoint,
+        uri: introWebBucketEndpoint,
       },
     },
   ]
 });
 
-export { webAPI };
+export { introWebAPI };
