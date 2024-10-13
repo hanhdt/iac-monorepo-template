@@ -1,0 +1,9 @@
+{
+  "name": "@pl-monorepo-template/infra",
+  "main": "index.ts",
+  "dependencies": {
+    "@pulumi/aws": "^6.0.0",
+    "@pulumi/awsx": "^2.0.2",
+    "@pulumi/pulumi": "^3.113.0"
+  }
+}

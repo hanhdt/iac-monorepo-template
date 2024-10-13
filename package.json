@@ -1,0 +1,13 @@
+{
+  "name": "pl-monorepo-template",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^22.7.5",
+    "lerna": "^8.1.8",
+    "typescript": "^5.6.3"
+  }
+}

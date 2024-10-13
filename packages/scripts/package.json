@@ -1,0 +1,8 @@
+{
+  "name": "@pl-monorepo-template/scripts",
+  "version": "0.0.1",
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "tsx": "^4.7.2"
+  }
+}

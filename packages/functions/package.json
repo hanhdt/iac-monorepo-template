@@ -1,0 +1,10 @@
+{
+  "name": "@pulumi-monorepo-template/functions",
+  "version": "0.0.1",
+  "dependencies": {
+    "@pl-monorepo-template/core": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5"
+  }
+}
