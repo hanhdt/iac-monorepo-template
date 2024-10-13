@@ -1,5 +1,5 @@
 {
-  "name": "@pl-monorepo-template/functions",
+  "name": "@pl-monorepo-template/frontend",
   "version": "0.0.1",
   "exports": {
     "./*": [
@@ -7,9 +7,10 @@
       "./src/*.ts"
     ]
   },
+  "scripts": {},
   "dependencies": {
-    "@pl-monorepo-template/core": "*",
-    "@pulumi/aws": "^6.55.0"
+    "@pulumi/aws": "^6.0.0",
+    "@pulumi/pulumi": "^3.113.0"
   },
   "devDependencies": {
     "@types/node": "^22.7.5"

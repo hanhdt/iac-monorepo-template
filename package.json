@@ -2,7 +2,8 @@
   "name": "pl-monorepo-template",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "infra"
   ],
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",

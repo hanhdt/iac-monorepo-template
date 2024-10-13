@@ -1,8 +1,14 @@
-// import * as pulumi from "@pulumi/pulumi";
-// import * as aws from "@pulumi/aws";
-// import * as awsx from "@pulumi/awsx";
-
 import { bucket } from "./src/storages";
+import { webBucket, webBucketEndpoint } from "./src/web";
+import { notesAPI } from "./src/api";
 
-// Export the name of the bucket
-export const bucketName = bucket.id;
+const notesBucketId = bucket.id;
+const webBucketId = webBucket.id;
+const notesAPIUrl = notesAPI.url;
+
+export {
+  notesBucketId,
+  webBucketId,
+  webBucketEndpoint,
+  notesAPIUrl,
+};
