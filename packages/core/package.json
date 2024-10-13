@@ -8,8 +8,11 @@
     ]
   },
   "scripts": {},
-  "dependencies": {},
+  "dependencies": {
+    "uuid": "^10.0.0"
+  },
   "devDependencies": {
-    "@types/node": "^22.7.5"
+    "@types/node": "^22.7.5",
+    "@types/uuid": "^10.0.0"
   }
 }

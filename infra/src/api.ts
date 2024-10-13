@@ -4,6 +4,9 @@ import * as apigateway from "@pulumi/aws-apigateway";
 import { Greeting } from "@pl-monorepo-template/functions/greeting";
 import { webBucketEndpoint } from "./web";
 
+const greetingHandler = new aws.lambda.CallbackFunction("greetingHandler", {
+  callback: Greeting.handler,
+});
 
 // Notes REST API
 const notesAPI = new apigateway.RestAPI("notes-api", {
@@ -20,7 +23,7 @@ const notesAPI = new apigateway.RestAPI("notes-api", {
     {
       path: "/greeting",
       method: "GET",
-      eventHandler: Greeting.handler,
+      eventHandler: greetingHandler,
       apiKeyRequired: true,
     }
   ]

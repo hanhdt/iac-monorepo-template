@@ -1,5 +1,7 @@
+import * as uuid from "uuid";
+
 export namespace Example {
   export function hello() {
-    return "Hello, world!";
+    return `[${uuid.v4()}] Hello, world!`;
   }
 }
