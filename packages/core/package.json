@@ -1,5 +1,5 @@
 {
-  "name": "@pl-monorepo-template/core",
+  "name": "@iac-monorepo-template/core",
   "version": "0.0.1",
   "exports": {
     "./*": [

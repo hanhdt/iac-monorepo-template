@@ -1,5 +1,5 @@
 {
-  "name": "@pl-monorepo-template/infra",
+  "name": "@iac-monorepo-template/infra",
   "version": "0.0.1",
   "exports": {
     "./*": [
@@ -9,7 +9,7 @@
     ]
   },
   "dependencies": {
-    "@pl-monorepo-template/functions": "^0.0.1",
+    "@iac-monorepo-template/functions": "^0.0.1",
     "@pulumi/aws": "^6.0.0",
     "@pulumi/aws-apigateway": "^2.6.1",
     "@pulumi/awsx": "^2.0.2",

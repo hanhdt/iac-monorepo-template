@@ -1,5 +1,5 @@
 {
-  "name": "pl-monorepo-template",
+  "name": "iac-monorepo-template",
   "version": "0.0.1",
   "workspaces": [
     "packages/*",

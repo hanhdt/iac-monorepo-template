@@ -1,4 +1,4 @@
-name: monorepo-template-infra
+name: iac-monorepo-template
 description: A minimal AWS TypeScript Pulumi monorepo template
 main: infra/index.ts
 runtime:

@@ -1,5 +1,5 @@
 {
-  "name": "@pl-monorepo-template/frontend",
+  "name": "@iac-monorepo-template/frontend",
   "version": "0.0.1",
   "exports": {
     "./*": [
