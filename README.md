@@ -6,6 +6,8 @@ This repository is a minimal AWS TypeScript Pulumi monorepo template. It is desi
 
 This template is designed to help you manage your infrastructure as code in a monorepo structure. It is based on the following principles:
 
+![Monorepo Structure](docs/images/monorepo-polyrepo.svg)
+
 - **Monorepo**: A single repository to manage all your infrastructure code.
 - **Domain-Driven Design**: Each package should represent a domain or a specific area of the infrastructure.
 - **Packages**: Each package is a separate NPM package that can be shared across the monorepo.
