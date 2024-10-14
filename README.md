@@ -109,12 +109,31 @@ To deploy the infrastructure using Pulumi, run:
   pulumi up
 ```
 
-### Adding New Packages
+### Adding new packages
 
 To add a new package to the monorepo, use Lerna:
 
 ```sh
   lerna create <package-name> packages/<package-name>
+```
+
+### Run a npm script in each package
+
+```sh
+  lerna run <my-script> -- [..args] # runs npm run my-script in all packages that have it
+  lerna run --scope @my-scope/my-package my-script # runs npm run my-script in a specific package
+```
+
+### Execute an arbitrary command in each package
+
+```sh
+  lerna exec -- <command>
+```
+
+You may also run a script located in the scripts dir, in a complicated dir structure through the environment variable LERNA_ROOT_PATH:
+
+```sh
+  LERNA_ROOT_PATH=packages/scripts lerna exec -- node \$LERNA_ROOT_PATH/some-script.js
 ```
 
 ### Contributing
