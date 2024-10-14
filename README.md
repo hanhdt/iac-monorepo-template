@@ -21,7 +21,7 @@ This template is designed to help you manage your infrastructure as code in a mo
 - **Testing**: Write tests for infrastructure code to ensure correctness and reliability.
 - **Continuous Integration**: Use CI/CD pipelines to automate testing, linting, and deployment.
 - **Versioning**: Use semantic versioning to manage package versions and releases.
-- **Infrastructure as Code**: Use Pulumi to manage infrastructure as code and automate deployments.
+- **Infrastructure as Code**: Use IaC framework to manage the infrastructure and automate deployments.
 
 ## Project Structure
 
