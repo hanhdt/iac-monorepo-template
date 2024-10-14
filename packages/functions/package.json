@@ -16,7 +16,6 @@
     "@aws-sdk/lib-dynamodb": "^3.670.0",
     "@iac-monorepo-template/core": "*",
     "@pulumi/aws": "^6.0.0",
-    "aws-lambda": "^1.0.7",
     "uuid": "^10.0.0"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 import * as aws from "@pulumi/aws";
 import * as apigateway from "@pulumi/aws-apigateway";
-import { GreetingHandler } from "@iac-monorepo-template/functions/greeting";
+import { Greeting } from "@iac-monorepo-template/functions/greeting";
 
 
 // Hello REST API
@@ -11,7 +11,7 @@ const helloApi = new apigateway.RestAPI("hello-api", {
     {
       path: "/",
       method: "GET",
-      eventHandler: GreetingHandler.handler,
+      eventHandler: Greeting.handler,
       apiKeyRequired: true,
     }
   ]
