@@ -79,27 +79,19 @@ This template uses NPM Workspaces and Lerna to manage the monorepo structure.
 
 ### Installation
 
-1. Clone the repository:
+#### 1. Clone the repository
 
   ```sh
     git clone <repository-url>
     cd iac-monorepo-template
   ```
 
-1. Install dependencies:
+#### 2. Install dependencies
 
   ```sh
     npm install
     lerna bootstrap
   ```
-
-### Building the Project
-
-To build the project, run:
-
-```sh
-  npm run build
-```
 
 ### Deploying the Infrastructure
 
