@@ -10,7 +10,7 @@ const helloWorldAPIUrl = HelloWorld.api.url;
 
 const notesUploadBucketId = Notes.uploads.id;
 const notesAPIUrl = Notes.api.url;
-const notesTableId = Notes.table.id;
+const notesTableName = Notes.table.name;
 
 export {
   introWebBucketId,
@@ -18,5 +18,5 @@ export {
   helloWorldAPIUrl,
   notesAPIUrl,
   notesUploadBucketId,
-  notesTableId,
+  notesTableName,
 };
