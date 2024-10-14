@@ -1,6 +1,10 @@
 {
   "name": "@iac-monorepo-template/infra",
   "version": "0.0.1",
+  "scripts": {
+    "deploy": "GODEBUG=asyncpreemptoff=1 pulumi up",
+    "destroy": "GODEBUG=asyncpreemptoff=1 pulumi destroy"
+  },
   "exports": {
     "./*": [
       "./index.ts",

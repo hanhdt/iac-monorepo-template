@@ -1,6 +1,16 @@
 {
   "name": "@iac-monorepo-template/scripts",
   "version": "0.0.1",
+  "exports": {
+    "./*": [
+      "./src/*/index.ts",
+      "./src/*.ts"
+    ]
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
   "devDependencies": {
     "@types/node": "^22.7.5",
     "tsx": "^4.7.2"

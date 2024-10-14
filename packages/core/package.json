@@ -7,7 +7,10 @@
       "./src/*.ts"
     ]
   },
-  "scripts": {},
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
   "dependencies": {
     "uuid": "^10.0.0"
   },

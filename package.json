@@ -1,6 +1,11 @@
 {
   "name": "iac-monorepo-template",
   "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "deploy": "lerna run deploy",
+    "destroy": "lerna run destroy"
+  },
   "workspaces": [
     "packages/*",
     "infra"

@@ -1,6 +1,10 @@
 {
   "name": "@iac-monorepo-template/functions",
   "version": "0.0.1",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
   "exports": {
     "./*": [
       "./src/*/index.ts",
@@ -8,7 +12,7 @@
     ]
   },
   "dependencies": {
-    "@pl-monorepo-template/core": "*",
+    "@iac-monorepo-template/core": "*",
     "@pulumi/aws": "^6.0.0"
   },
   "devDependencies": {
