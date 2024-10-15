@@ -18,7 +18,7 @@ const main = Util.handler(async (event: APIGatewayProxyEvent, _context: any) => 
   let params: PutCommandInput;
 
   if (event.body) {
-    const notesTableName = Util.stackOutput('notesTableName');
+    const notesTableName = null;
     console.log('dynamoDbTableName:', notesTableName);
     data = JSON.parse(event.body);
     params = {

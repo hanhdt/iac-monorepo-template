@@ -1,4 +1,3 @@
-import * as pulumi from "@pulumi/pulumi";
 import { Context, APIGatewayProxyEvent } from "aws-lambda";
 import { Responses } from "../responses";
 
@@ -24,20 +23,6 @@ const lambdaHandler = (lambda: (event: APIGatewayProxyEvent, context: Context) =
   };
 };
 
-const getCurrentStackOutput = (outputName: string): string => {
-  const currentStack = pulumi.getStack();
-  const currentStackReference = new pulumi.StackReference(currentStack);
-  return currentStackReference.getOutput(outputName).get();
-};
-
-const getCurrentStackResources = (): pulumi.StackReference => {
-  const currentStack = pulumi.getStack();
-  const currentStackReference = new pulumi.StackReference(currentStack);
-  return currentStackReference;
-}
-
 export namespace Util {
   export const handler = lambdaHandler;
-  export const stackOutput = getCurrentStackOutput;
-  export const stackResources = getCurrentStackResources;
 }
