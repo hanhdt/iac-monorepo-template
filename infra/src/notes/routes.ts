@@ -28,6 +28,12 @@ const routes: apigateway.types.input.RouteArgs[] = [
     eventHandler: Notes.updateHandler,
     apiKeyRequired: true,
   },
+  {
+    path: "/notes/{id}",
+    method: "DELETE",
+    eventHandler: Notes.deleteHandler,
+    apiKeyRequired: true,
+  }
 ];
 
 export default routes;

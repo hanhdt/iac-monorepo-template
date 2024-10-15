@@ -9,6 +9,7 @@ import {
 import { Util } from "@iac-monorepo-template/core/util";
 import { Responses } from "@iac-monorepo-template/core/responses";
 
+
 const main = Util.handler(async (event: APIGatewayProxyEvent, _context: any) => {
   console.log('Event:', JSON.stringify(event));
 
