@@ -1,10 +1,9 @@
 import * as aws from "@pulumi/aws";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { GetCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import { QueryCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 import { Util } from "@iac-monorepo-template/core/util";
 import { Responses } from "@iac-monorepo-template/core/responses";
-
 
 const main = Util.handler(async (event: APIGatewayProxyEvent, _context: any) => {
   console.log('Event:', JSON.stringify(event));
@@ -12,24 +11,20 @@ const main = Util.handler(async (event: APIGatewayProxyEvent, _context: any) => 
   const notesTableName = process.env.NOTES_TABLE_NAME ?? 'notes';
   const params = {
     TableName: notesTableName,
-    Key: {
-      userId: 'abcd123',
-      noteId: event?.pathParameters?.id,
+    KeyConditionExpression: 'userId = :userId',
+    ExpressionAttributeValues: {
+      ':userId': 'abcd123',
     },
   };
 
   const dynamoDb = DynamoDBDocumentClient.from(new DynamoDBClient({}));
-  const result = await dynamoDb.send(new GetCommand(params));
+  const result = await dynamoDb.send(new QueryCommand(params));
 
-  if (!result.Item) {
-    throw new Error('Item not found');
-  }
-
-  return Responses.successHttpResponse(result.Item);
+  return Responses.successHttpResponse(result.Items);
 });
 
-const getNoteHandler = new aws.lambda.CallbackFunction("getNoteHandler", {
+const listNotesHandler = new aws.lambda.CallbackFunction("listNotesHandler", {
   callback: main,
 });
 
-export default getNoteHandler;
+export default listNotesHandler;

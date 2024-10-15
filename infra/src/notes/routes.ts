@@ -7,14 +7,7 @@ const routes: apigateway.types.input.RouteArgs[] = [
   {
     path: "/notes",
     method: "GET",
-    eventHandler: new aws.lambda.CallbackFunction("getNotesHandler", {
-      callback: async (_event: any) => {
-        return {
-          statusCode: 200,
-          body: JSON.stringify({ message: "GET /notes" }),
-        };
-      },
-    }),
+    eventHandler: Notes.listHandler,
     apiKeyRequired: true,
   },
   {
