@@ -1,7 +1,8 @@
+import * as pulumi from "@pulumi/pulumi";
 import { Context, APIGatewayProxyEvent } from "aws-lambda";
 import { Responses } from "../responses";
 
-const main = (lambda: (event: APIGatewayProxyEvent, context: Context) => Promise<any>) => {
+const lambdaHandler = (lambda: (event: APIGatewayProxyEvent, context: Context) => Promise<any>) => {
   return async (event: APIGatewayProxyEvent, context: Context) => {
     let response: Responses.HttpResponse, statusCode: number, message: string;
 
@@ -22,6 +23,20 @@ const main = (lambda: (event: APIGatewayProxyEvent, context: Context) => Promise
   };
 };
 
+const getCurrentStackOutput = (outputName: string): pulumi.Output<any> => {
+  const currentStack = pulumi.getStack();
+  const currentStackReference = new pulumi.StackReference(currentStack);
+  return currentStackReference.getOutput(outputName);
+};
+
+const getCurrentStackResources = (): pulumi.StackReference => {
+  const currentStack = pulumi.getStack();
+  const currentStackReference = new pulumi.StackReference(currentStack);
+  return currentStackReference;
+}
+
 export namespace Util {
-  export const handler = main;
+  export const handler = lambdaHandler;
+  export const stackOutput = getCurrentStackOutput;
+  export const stackResources = getCurrentStackResources;
 }
