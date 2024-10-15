@@ -10,33 +10,32 @@ import { Util } from "@iac-monorepo-template/core/util";
 
 
 const main = Util.handler(async (event: APIGatewayProxyEvent, _context: any) => {
+  console.log('Event:', JSON.stringify(event));
   let data = {
     title: '',
     content: '',
     attachment: '',
   };
   let params: PutCommandInput;
-
   if (event.body) {
-    const notesTableName = null;
-    console.log('dynamoDbTableName:', notesTableName);
+    const notesTableName = process.env.NOTES_TABLE_NAME ?? 'notes';
     data = JSON.parse(event.body);
     params = {
-      TableName: notesTableName ?? 'notes',
+      TableName: notesTableName,
       Item: {
-        userId: { S: "123" },
-        noteId: { S: uuid.v4() },
-        title: { S: data.title },
-        content: { S: data.content },
-        attachment: { S: data.attachment },
-        createdAt: { S: new Date().toISOString() },
+        userId: "abcd123",
+        noteId: uuid.v4(),
+        title: data.title,
+        content: data.content,
+        attachment: data.attachment,
+        createdAt: new Date().toISOString(),
       },
     };
   } else {
     return Responses.errorHttpResponse('No data provided', 400);
   }
 
-  const client = DynamoDBDocumentClient.from(new DynamoDBClient({region: `${aws.getRegion()}`}));
+  const client = DynamoDBDocumentClient.from(new DynamoDBClient({}));
   await client.send(new PutCommand(params));
 
   return Responses.successHttpResponse(params.Item);

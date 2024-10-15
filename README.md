@@ -9,18 +9,13 @@ This template is designed to help you manage your infrastructure as code in a mo
 ![Monorepo Structure](docs/images/monorepo-polyrepo.svg)
 
 - **Monorepo**: A single repository to manage all your infrastructure code.
+- **Infrastructure as Code**: Use IaC framework to manage the infrastructure and automate deployments.
 - **Domain-Driven Design**: Each package should represent a domain or a specific area of the infrastructure.
 - **Packages**: Each package is a separate NPM package that can be shared across the monorepo.
 - **Dependencies**: Packages can depend on each other, and shared code can be reused across packages.
 - **Separation of Concerns**: Each package should have a clear responsibility and should be decoupled from other packages.
-- **Reusability**: Shared code should be extracted into a separate package and reused across other packages.
-- **Consistency**: Follow a consistent structure and naming convention across packages.
-- **Scalability**: The monorepo structure should scale as the infrastructure grows.
-- **Automation**: Use scripts and tools to automate common tasks and workflows.
-- **Documentation**: Document the architecture, design decisions, and workflows.
 - **Testing**: Write tests for infrastructure code to ensure correctness and reliability.
 - **Continuous Integration**: Use CI/CD pipelines to automate testing, linting, and deployment.
-- **Infrastructure as Code**: Use IaC framework to manage the infrastructure and automate deployments.
 
 ## Project Structure
 

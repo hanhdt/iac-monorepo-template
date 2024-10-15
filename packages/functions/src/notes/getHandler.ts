@@ -6,12 +6,13 @@ import { Util } from "@iac-monorepo-template/core/util";
 import { Responses } from "@iac-monorepo-template/core/responses";
 
 const main = Util.handler(async (event: APIGatewayProxyEvent, _context: any) => {
-  const notesTableName = null;
-  console.log('dynamoDbTableName:', notesTableName);
+  console.log('Event:', JSON.stringify(event));
+
+  const notesTableName = process.env.NOTES_TABLE_NAME ?? 'notes';
   const params = {
-    TableName: notesTableName ?? 'notes',
+    TableName: notesTableName,
     Key: {
-      userId: '123',
+      userId: 'abcd123',
       noteId: event?.pathParameters?.id,
     },
   };
