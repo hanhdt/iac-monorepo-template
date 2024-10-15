@@ -21,7 +21,13 @@ const routes: apigateway.types.input.RouteArgs[] = [
     method: "POST",
     eventHandler: Notes.createHandler,
     apiKeyRequired: true,
-  }
+  },
+  {
+    path: "/notes/{id}",
+    method: "PUT",
+    eventHandler: Notes.updateHandler,
+    apiKeyRequired: true,
+  },
 ];
 
 export default routes;
