@@ -1,19 +1,21 @@
 import { Context, APIGatewayProxyEvent } from "aws-lambda";
-import { HttpResponse, errorHttpResponse } from "@iac-monorepo-template/core/responses";
+import { Responses } from "../responses";
 
 const main = (lambda: (event: APIGatewayProxyEvent, context: Context) => Promise<any>) => {
   return async (event: APIGatewayProxyEvent, context: Context) => {
-    let response: HttpResponse, statusCode: number, message: string;
+    let response: Responses.HttpResponse, statusCode: number, message: string;
 
     try {
       response = await lambda(event, context);
     } catch (error) {
       if (error instanceof Error) {
+        statusCode = 400;
         message = error.message;
       } else {
+        statusCode = 500;
         message = String(error);
       }
-      response = errorHttpResponse(message, 500);
+      response = Responses.errorHttpResponse(message, statusCode);
     }
 
     return response;

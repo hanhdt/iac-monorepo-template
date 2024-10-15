@@ -1,14 +1,10 @@
 import * as aws from "@pulumi/aws";
 import * as uuid from 'uuid';
 import { APIGatewayProxyEvent } from "aws-lambda";
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { PutCommand, PutCommandInput, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 import {
-  DynamoDBClient,
-  PutItemCommand,
-  PutItemCommandInput
-} from '@aws-sdk/client-dynamodb';
-import {
-  successHttpResponse,
-  errorHttpResponse
+  Responses
 } from "@iac-monorepo-template/core/responses";
 import { Util } from "@iac-monorepo-template/core/util";
 
@@ -19,7 +15,7 @@ const main = Util.handler(async (event: APIGatewayProxyEvent, _context: any) => 
     content: '',
     attachment: '',
   };
-  let params: PutItemCommandInput;
+  let params: PutCommandInput;
 
   if (event.body) {
     data = JSON.parse(event.body);
@@ -35,13 +31,13 @@ const main = Util.handler(async (event: APIGatewayProxyEvent, _context: any) => 
       },
     };
   } else {
-    return errorHttpResponse('No data provided', 400);
+    return Responses.errorHttpResponse('No data provided', 400);
   }
 
-  const client = new DynamoDBClient({ region: `${aws.getRegion()}` });
-  await client.send(new PutItemCommand(params));
+  const client = DynamoDBDocumentClient.from(new DynamoDBClient({region: `${aws.getRegion()}`}));
+  await client.send(new PutCommand(params));
 
-  return successHttpResponse(params.Item);
+  return Responses.successHttpResponse(params.Item);
 });
 
 const createNoteHandler = new aws.lambda.CallbackFunction("createNoteHandler", {

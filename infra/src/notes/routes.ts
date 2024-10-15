@@ -18,6 +18,12 @@ const routes: apigateway.types.input.RouteArgs[] = [
     apiKeyRequired: true,
   },
   {
+    path: "/notes/{id}",
+    method: "GET",
+    eventHandler: Notes.getHandler,
+    apiKeyRequired: true,
+  },
+  {
     path: "/notes",
     method: "POST",
     eventHandler: Notes.createHandler,
