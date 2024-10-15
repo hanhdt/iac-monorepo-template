@@ -20,7 +20,6 @@ This template is designed to help you manage your infrastructure as code in a mo
 - **Documentation**: Document the architecture, design decisions, and workflows.
 - **Testing**: Write tests for infrastructure code to ensure correctness and reliability.
 - **Continuous Integration**: Use CI/CD pipelines to automate testing, linting, and deployment.
-- **Versioning**: Use semantic versioning to manage package versions and releases.
 - **Infrastructure as Code**: Use IaC framework to manage the infrastructure and automate deployments.
 
 ## Project Structure
@@ -98,7 +97,15 @@ This template uses NPM Workspaces and Lerna to manage the monorepo structure.
 To deploy the infrastructure using Pulumi, run:
 
 ```sh
-  pulumi up
+  npm install deploy
+```
+
+### Destroying the Infrastructure
+
+To destroy the infrastructure using Pulumi, run:
+
+```sh
+  npm run destroy
 ```
 
 ### Adding new packages

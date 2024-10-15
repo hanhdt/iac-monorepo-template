@@ -6,7 +6,7 @@ import { Util } from "@iac-monorepo-template/core/util";
 import { Responses } from "@iac-monorepo-template/core/responses";
 
 const main = Util.handler(async (event: APIGatewayProxyEvent, _context: any) => {
-  const notesTableName = Util.stackOutput('notesTableName').get();
+  const notesTableName = Util.stackOutput('notesTableName');
   console.log('dynamoDbTableName:', notesTableName);
   const params = {
     TableName: notesTableName ?? 'notes',
