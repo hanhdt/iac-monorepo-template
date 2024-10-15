@@ -1,3 +1,8 @@
+type HttpResponse = {
+  statusCode: number,
+  body: string,
+}
+
 const successResponse = (data: any) => {
   return {
     status: 'success',
@@ -12,14 +17,14 @@ const errorResponse = (message: string) => {
   };
 }
 
-const successHttpResponse = (data: any) => {
+const successHttpResponse = (data: any): HttpResponse => {
   return {
     statusCode: 200,
     body: JSON.stringify(successResponse(data)),
   };
 }
 
-const errorHttpResponse = (message: string, statusCode = 500) => {
+const errorHttpResponse = (message: string, statusCode = 500): HttpResponse => {
   return {
     statusCode,
     body: JSON.stringify(errorResponse(message)),
@@ -31,4 +36,5 @@ export {
   errorResponse,
   successHttpResponse,
   errorHttpResponse,
+  HttpResponse,
 };

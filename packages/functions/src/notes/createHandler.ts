@@ -1,5 +1,6 @@
 import * as aws from "@pulumi/aws";
 import * as uuid from 'uuid';
+import { APIGatewayProxyEvent } from "aws-lambda";
 import {
   DynamoDBClient,
   PutItemCommand,
@@ -9,10 +10,15 @@ import {
   successHttpResponse,
   errorHttpResponse
 } from "@iac-monorepo-template/core/responses";
+import { Util } from "@iac-monorepo-template/core/util";
 
 
-const main = async (event: any, _context: any) => {
-  let data;
+const main = Util.handler(async (event: APIGatewayProxyEvent, _context: any) => {
+  let data = {
+    title: '',
+    content: '',
+    attachment: '',
+  };
   let params: PutItemCommandInput;
 
   if (event.body) {
@@ -32,22 +38,11 @@ const main = async (event: any, _context: any) => {
     return errorHttpResponse('No data provided', 400);
   }
 
-  try {
-    const client = new DynamoDBClient({ region: `${aws.getRegion()}` });
-    await client.send(new PutItemCommand(params));
+  const client = new DynamoDBClient({ region: `${aws.getRegion()}` });
+  await client.send(new PutItemCommand(params));
 
-    return successHttpResponse(params.Item);
-  } catch (error) {
-    let message;
-    if (error instanceof Error) {
-      message = error.message;
-    } else {
-      message = String(error);
-    }
-
-    return errorHttpResponse(message, 500);
-  }
-};
+  return successHttpResponse(params.Item);
+});
 
 const createNoteHandler = new aws.lambda.CallbackFunction("createNoteHandler", {
   callback: main,
