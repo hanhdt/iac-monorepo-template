@@ -43,8 +43,9 @@ const identityPool = new aws.cognito.IdentityPool("IdentityPool", {
 
 // TODO: Specify the resources that the identity pool has access to
 
-export {
-  userPool,
-  userPoolClient,
-  identityPool,
+export namespace Auth {
+  export const UserPool = userPool;
+  export const UserPoolClient = userPoolClient;
+  export const IdentityPool = identityPool;
+  export const Region = currentRegion;
 }
