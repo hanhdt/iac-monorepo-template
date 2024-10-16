@@ -29,6 +29,6 @@ const lambdaHandler = (lambda: (event: APIGatewayProxyEvent, context: Context) =
   };
 };
 
-export namespace Util {
+export namespace Utils {
   export const handler = lambdaHandler;
 }

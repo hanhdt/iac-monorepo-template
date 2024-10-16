@@ -18,6 +18,7 @@
   "version": "independent",
   "packages": [
     "packages/*",
+    "packages/functions/*",
     "infra"
   ]
 }

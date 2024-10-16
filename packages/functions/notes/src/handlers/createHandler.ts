@@ -1,15 +1,13 @@
 import * as aws from "@pulumi/aws";
 import * as uuid from 'uuid';
-import { APIGatewayProxyEvent } from "aws-lambda";
+import { APIGatewayProxyEvent, Context } from "aws-lambda";
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { PutCommand, PutCommandInput, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
-import {
-  Responses
-} from "@iac-monorepo-template/core/responses";
-import { Util } from "@iac-monorepo-template/core/util";
+import { Responses } from "@iac-monorepo-template/core/responses";
+import { Utils } from "@iac-monorepo-template/core/utils";
 
 
-const main = Util.handler(async (event: APIGatewayProxyEvent, _context: any) => {
+const main = Utils.handler(async (event: APIGatewayProxyEvent, _context: Context) => {
   console.log('Event:', JSON.stringify(event));
   let data = {
     title: '',

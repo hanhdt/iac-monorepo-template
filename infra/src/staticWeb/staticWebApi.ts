@@ -1,7 +1,7 @@
 import * as apigateway from "@pulumi/aws-apigateway";
-import { introWebBucketEndpoint } from "./introWebBucket";
+import { staticWebBucketEndpoint } from "./staticWebBucket";
 
-const introWebAPI = new apigateway.RestAPI("web-api", {
+const staticWebApi = new apigateway.RestAPI("web-api", {
   description: "API collection for notes",
   apiKeySource: "HEADER",
   routes: [
@@ -9,10 +9,10 @@ const introWebAPI = new apigateway.RestAPI("web-api", {
       path: "/",
       target: {
         type: "http_proxy",
-        uri: introWebBucketEndpoint,
+        uri: staticWebBucketEndpoint,
       },
     },
   ]
 });
 
-export { introWebAPI };
+export { staticWebApi };
