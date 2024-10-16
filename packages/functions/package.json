@@ -3,12 +3,16 @@
   "version": "0.0.1",
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "dev:init": "GODEBUG=asyncpreemptoff=1 pulumi stack init dev",
+    "deploy": "GODEBUG=asyncpreemptoff=1 pulumi up --yes",
+    "destroy": "GODEBUG=asyncpreemptoff=1 pulumi destroy --yes"
   },
   "exports": {
     "./*": [
       "./src/*/index.ts",
-      "./src/*.ts"
+      "./src/*.ts",
+      "./index.ts"
     ]
   },
   "dependencies": {
@@ -16,6 +20,9 @@
     "@aws-sdk/lib-dynamodb": "^3.670.0",
     "@iac-monorepo-template/core": "*",
     "@pulumi/aws": "^6.0.0",
+    "@pulumi/aws-apigateway": "^2.6.1",
+    "@pulumi/awsx": "^2.0.2",
+    "@pulumi/pulumi": "^3.113.0",
     "uuid": "^10.0.0"
   },
   "devDependencies": {

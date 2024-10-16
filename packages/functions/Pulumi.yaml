@@ -1,5 +1,5 @@
-name: iac-monorepo-template-infra-base
-description: Base infrastructure for the monorepo
+name: iac-monorepo-template-functions
+description: Infrastructure for the functions in the monorepo
 main: index.ts
 runtime:
   name: nodejs

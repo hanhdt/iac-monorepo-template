@@ -3,9 +3,7 @@ import * as uuid from 'uuid';
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { PutCommand, PutCommandInput, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
-import {
-  Responses
-} from "@iac-monorepo-template/core/responses";
+import { Responses } from "@iac-monorepo-template/core/responses";
 import { Util } from "@iac-monorepo-template/core/util";
 
 

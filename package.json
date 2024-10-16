@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "dev:init": "lerna run dev:init",
     "deploy": "lerna run deploy",
     "destroy": "lerna run destroy"
   },

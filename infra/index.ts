@@ -1,22 +1,10 @@
-import { IntroWeb } from "./src/introWeb";
-import { HelloWorld } from "./src/helloWorld";
-import { Notes } from "./src/notes";
+import { StaticWeb } from "./src/staticWeb";
 
 
-const introWebBucketId = IntroWeb.html.introWebBucket.id;
-const introWebAPIUrl = IntroWeb.api.url;
-
-const helloWorldAPIUrl = HelloWorld.api.url;
-
-const notesUploadBucketId = Notes.uploads.id;
-const notesAPIUrl = Notes.api.url;
-const notesTableName = Notes.table.name;
+const staticWebBucketId = StaticWeb.html.staticWebBucket.id;
+const staticWebAPIUrl = StaticWeb.api.url;
 
 export {
-  introWebBucketId,
-  introWebAPIUrl,
-  helloWorldAPIUrl,
-  notesAPIUrl,
-  notesUploadBucketId,
-  notesTableName,
+  staticWebBucketId,
+  staticWebAPIUrl
 };

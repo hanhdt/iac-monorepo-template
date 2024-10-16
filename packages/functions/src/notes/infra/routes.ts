@@ -1,6 +1,5 @@
-import * as aws from "@pulumi/aws";
 import * as apigateway from "@pulumi/aws-apigateway";
-import { Notes } from "@iac-monorepo-template/functions/notes";
+import { NoteHandlers as Notes } from "../handlers";
 
 // Export the Notes routes
 const routes: apigateway.types.input.RouteArgs[] = [
