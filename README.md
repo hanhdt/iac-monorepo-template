@@ -15,7 +15,7 @@ This template is designed to help you manage your infrastructure as code in a mo
 - **Dependencies**: Packages can depend on each other, and shared code can be reused across packages.
 - **Separation of Concerns**: Each package should have a clear responsibility and should be decoupled from other packages.
 - **Testing**: Write tests for infrastructure code to ensure correctness and reliability.
-- **Continuous Integration**: Use CI/CD pipelines to automate testing, linting, and deployment.
+- **CI/CD**: Use CI/CD pipelines to automate testing, linting, and deployment.
 
 ## Project Structure
 
@@ -24,23 +24,35 @@ This template is designed to help you manage your infrastructure as code in a mo
   .vscode/
   └── settings.json
   infra/
+  ├── Pulumi.dev.yaml
+  ├── Pulumi.yaml
   ├── index.ts
   └── src/
       ├── component1/
-      │ └── index.ts
+      │   └── index.ts
       ├── component2/
-      │ ├── index.ts
+      │   ├── index.ts
       └── component3/
-        └── index.ts
+          └── index.ts
   lerna.json
   package.json
   packages/
   ├── core/
   ├── frontend/
   ├── functions/
+      ├── service1/
+          ├── Pulumi.dev.yaml
+          ├── Pulumi.yaml
+      │   └── index.ts
+      ├── service2/
+          ├── Pulumi.dev.yaml
+          ├── Pulumi.yaml
+      │   └── index.ts
+      └── service3/
+          ├── Pulumi.dev.yaml
+          ├── Pulumi.yaml
+          └── index.ts
   └── scripts/
-  Pulumi.dev.yaml
-  Pulumi.yaml
   README.md
   tsconfig.json
 ```
@@ -49,7 +61,7 @@ This template is designed to help you manage your infrastructure as code in a mo
 
 This template uses NPM Workspaces and Lerna to manage the monorepo structure.
 
-- **infra/**: Defines our main cloud infrastructure.
+- **infra/**: Defines our base cloud infrastructure.
   - **index.ts**: Entry point for Pulumi to deploy the infrastructure.
   - **src/**: Contains subdirectories for different infrastructure components.
 - **packages/**: Contains various packages used in the monorepo. Each package is a separate NPM package.
