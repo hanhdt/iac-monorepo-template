@@ -13,7 +13,6 @@ This template is designed to help you manage your infrastructure as code in a mo
 - **Domain-Driven Design**: Each package should represent a domain or a specific area of the infrastructure.
 - **Packages**: Each package is a separate NPM package that can be shared across the monorepo.
 - **Dependencies**: Packages can depend on each other, and shared code can be reused across packages.
-- **Separation of Concerns**: Each package should have a clear responsibility and should be decoupled from other packages.
 - **Testing**: Write tests for infrastructure code to ensure correctness and reliability.
 - **CI/CD**: Use CI/CD pipelines to automate testing, linting, and deployment.
 
