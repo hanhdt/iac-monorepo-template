@@ -1,0 +1,3 @@
+# Create a new package
+
+To create a new package in the `packages` directory, ...

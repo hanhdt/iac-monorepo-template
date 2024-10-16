@@ -1,0 +1,3 @@
+# Create a new service
+
+To create a new service in the `packages/functions` directory, ...
