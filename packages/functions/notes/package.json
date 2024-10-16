@@ -1,19 +1,17 @@
 {
-  "name": "@iac-monorepo-template/functions",
+  "name": "@iac-monorepo-template/note-functions",
   "version": "0.0.1",
+  "exports": {
+    "./*": [
+      "./index.ts"
+    ]
+  },
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "dev:init": "GODEBUG=asyncpreemptoff=1 pulumi stack init dev",
-    "deploy": "GODEBUG=asyncpreemptoff=1 pulumi up --yes",
-    "destroy": "GODEBUG=asyncpreemptoff=1 pulumi destroy --yes"
-  },
-  "exports": {
-    "./*": [
-      "./src/*/index.ts",
-      "./src/*.ts",
-      "./index.ts"
-    ]
+    "infra:init:dev": "GODEBUG=asyncpreemptoff=1 pulumi stack init dev",
+    "infra:deploy:dev": "GODEBUG=asyncpreemptoff=1 pulumi up -s dev -y",
+    "infra:destroy:dev": "GODEBUG=asyncpreemptoff=1 pulumi destroy -s dev -y"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.670.0",

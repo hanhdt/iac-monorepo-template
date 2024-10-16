@@ -1,5 +1,5 @@
 import * as apigateway from "@pulumi/aws-apigateway";
-import { NoteHandlers as Notes } from "../handlers";
+import { NoteHandlers as Notes } from "../src/handlers";
 
 // Export the Notes routes
 const routes: apigateway.types.input.RouteArgs[] = [

@@ -3,12 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev:init": "lerna run dev:init",
-    "deploy": "lerna run deploy",
-    "destroy": "lerna run destroy"
+    "infra:init:dev": "lerna run infra:init:dev",
+    "infra:deploy:dev": "lerna run infra:deploy:dev",
+    "infra:destroy:dev": "lerna run infra:destroy:dev"
   },
   "workspaces": [
     "packages/*",
+    "packages/functions/*",
     "infra"
   ],
   "devDependencies": {

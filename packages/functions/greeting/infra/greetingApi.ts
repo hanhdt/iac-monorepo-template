@@ -1,6 +1,6 @@
 import * as aws from "@pulumi/aws";
 import * as apigateway from "@pulumi/aws-apigateway";
-import greetingHandler from "../handlers/greetingHandler";
+import greetingHandler from "../src/handlers/greetingHandler";
 
 
 // Hello REST API
