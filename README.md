@@ -64,10 +64,11 @@ This template uses NPM Workspaces and Lerna to manage the monorepo structure.
   - **index.ts**: Entry point for Pulumi to deploy the infrastructure.
   - **src/**: Contains subdirectories for different infrastructure components.
 - **packages/**: Contains various packages used in the monorepo. Each package is a separate NPM package.
-  - **core/**: Core is for utilities and shared code. It is used across other packages.
+  - **core/**: Core is for utilities and shared business-logic codes that can used across other packages.
   - **frontend/**: Frontend-related code and static assets.
-  - **functions/**: AWS Lambda functions and it uses the Core package as a local dependency.
-  - **scripts/**: This is for any utility scripts.
+  - **functions/**: Serverless domain services and they will use the Core package as a local dependency.
+  - **scripts/**: Utility scripts across the project.
+  - **components/**: Reusable infra components that can be used across different packages.
 - **Pulumi.yaml**: Pulumi configuration file.
 - **lerna.json**: Lerna configuration file for managing the monorepo.
 - **package.json**: Root package.json file for the monorepo.

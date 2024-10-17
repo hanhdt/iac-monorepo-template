@@ -1,5 +1,6 @@
 {
   "name": "@iac-monorepo-template/infra-base",
+  "description": "Base infrastructure for the IaC monorepo template",
   "version": "0.0.1",
   "scripts": {
     "infra:init:dev": "GODEBUG=asyncpreemptoff=1 pulumi stack init dev",

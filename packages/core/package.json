@@ -1,5 +1,6 @@
 {
   "name": "@iac-monorepo-template/core",
+  "description": "Core is for utilities and shared code. It is used across other packages.",
   "version": "0.0.1",
   "exports": {
     "./*": [

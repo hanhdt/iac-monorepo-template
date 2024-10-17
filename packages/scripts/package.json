@@ -1,5 +1,6 @@
 {
   "name": "@iac-monorepo-template/scripts",
+  "description": "Utility scripts for the IaC monorepo template",
   "version": "0.0.1",
   "exports": {
     "./*": [
