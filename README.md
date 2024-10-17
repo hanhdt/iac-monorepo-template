@@ -96,6 +96,8 @@ This template uses NPM Workspaces and Lerna to manage the monorepo structure.
 
   ```sh
     npm install
+    
+    # This only applies to Lerna with the version less than 7
     lerna bootstrap
   ```
 
@@ -120,7 +122,15 @@ To destroy the infrastructure using Pulumi, run:
 To add a new package to the monorepo, use Lerna:
 
 ```sh
-  lerna create <package-name> packages/<package-name>
+  lerna create <package-name> packages
+```
+
+### Adding new services
+
+To add new services to the monorepo, use Lerna:
+
+```sh
+  lerna create <service-name> packages/functions
 ```
 
 ### Run a npm script in each package
