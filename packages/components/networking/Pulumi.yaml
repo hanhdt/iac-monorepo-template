@@ -1,0 +1,15 @@
+name: vpc-networking-component
+description: Infrastructure for the networking components in the monorepo
+main: src/index.ts
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+template:
+  config:
+    aws:region:
+      description: The AWS region to deploy into.
+      default: us-west-2
+    azCount:
+      description: The number of availability zones to use.
+      default: 2
