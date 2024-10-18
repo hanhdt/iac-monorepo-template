@@ -3,11 +3,11 @@
   "description": "VPC Networking - Reusable infrastructure component",
   "version": "0.0.1",
   "exports": {
-    "./*": [
-      "./src/index.ts",
-      "./src/*.ts"
+    ".": [
+      "./src/index.ts"
     ]
   },
+  "main": "./index.ts",
   "dependencies": {},
   "devDependencies": {
     "@types/node": "^22.7.5"
