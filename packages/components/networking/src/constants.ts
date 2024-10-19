@@ -3,7 +3,7 @@ export const SUBNET_TYPE = {
     "PRIVATE": "PRIVATE"
 }
 
-export const BOUND_TYPE = {
+export const FLOW_DIRECTION = {
     "IN_BOUND": "IN_BOUND",
     "ON_BOUND": "ON_BOUND"
 }

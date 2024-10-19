@@ -1,24 +1,23 @@
 import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
-import { ComponentResource, ComponentResourceOptions } from '@pulumi/pulumi'
 
-import { SUBNET_TYPE, BOUND_TYPE } from './constants'
+import { SUBNET_TYPE, FLOW_DIRECTION } from './constants'
 
 interface argsInterface {
     cidr: pulumi.Input<string>;
 
-    azs: pulumi.Input<string[]>;
-    private_subnets: pulumi.Input<string[]>;
-    public_subnets: pulumi.Input<string[]>;
+    availabilityZones: pulumi.Input<string[]>;
+    privateSubnets: pulumi.Input<string[]>;
+    publicSubnets: pulumi.Input<string[]>;
 
-    enable_nat_gateway: pulumi.Input<boolean>;
+    enableNatGateway: pulumi.Input<boolean>;
 
     tags?: {
         [key: string]: pulumi.Input<string>;
     }
 }
 
-export default class NetworkingComponent extends ComponentResource {
+export default class NetworkingComponent extends pulumi.ComponentResource {
     public readonly name: string;
     public readonly config: argsInterface;
     public readonly vpc: aws.ec2.Vpc;
@@ -42,7 +41,7 @@ export default class NetworkingComponent extends ComponentResource {
     public readonly networkAclRulePrivateOutbound: pulumi.Output<aws.ec2.NetworkAclRule>
 
 
-    constructor(name: string, args: argsInterface, opts?: ComponentResourceOptions) {
+    constructor(name: string, args: argsInterface, opts?: pulumi.ComponentResourceOptions) {
         super("custom:networking:VPC", name, {}, opts);
         this.config = args;
         this.name = name;
@@ -51,22 +50,22 @@ export default class NetworkingComponent extends ComponentResource {
         this.internetGateway = this.createInternetGateway()
 
         // Public
-        this.subnetsPublic = this.createSubnetResources(args.public_subnets, SUBNET_TYPE.PUBLIC)
+        this.subnetsPublic = this.createSubnetResources(args.publicSubnets, SUBNET_TYPE.PUBLIC)
         this.routeTablePublic = this.createRouteTableResource(SUBNET_TYPE.PUBLIC)
         this.routePublic = this.createRouteResource(this.routeTablePublic, SUBNET_TYPE.PUBLIC)
         this.routeTableAssociationPublic = this.createRouteTableAssociation(this.subnetsPublic, this.routeTablePublic, SUBNET_TYPE.PUBLIC)
         this.networkAclPublic = this.createNetworkAcl(this.subnetsPublic, SUBNET_TYPE.PUBLIC)
-        this.networkAclRulePublicInbound = this.createNetworkAclRule(this.networkAclPublic, SUBNET_TYPE.PUBLIC, BOUND_TYPE.IN_BOUND)
-        this.networkAclRulePublicOutbound = this.createNetworkAclRule(this.networkAclPublic, SUBNET_TYPE.PUBLIC, BOUND_TYPE.ON_BOUND)
+        this.networkAclRulePublicInbound = this.createNetworkAclRule(this.networkAclPublic, SUBNET_TYPE.PUBLIC, FLOW_DIRECTION.IN_BOUND)
+        this.networkAclRulePublicOutbound = this.createNetworkAclRule(this.networkAclPublic, SUBNET_TYPE.PUBLIC, FLOW_DIRECTION.ON_BOUND)
 
         // Private
-        this.subnetsPrivate = this.createSubnetResources(args.private_subnets, SUBNET_TYPE.PRIVATE)
+        this.subnetsPrivate = this.createSubnetResources(args.privateSubnets, SUBNET_TYPE.PRIVATE)
         this.routeTablePrivate = this.createRouteTableResource(SUBNET_TYPE.PRIVATE)
         // this.routePrivate = this.createRouteResource(this.routeTablePrivate, SUBNET_TYPE.PRIVATE)
         this.routeTableAssociationPrivate = this.createRouteTableAssociation(this.subnetsPrivate, this.routeTablePrivate, SUBNET_TYPE.PRIVATE)
         this.networkAclPrivate = this.createNetworkAcl(this.subnetsPrivate, SUBNET_TYPE.PRIVATE)
-        this.networkAclRulePrivateInbound = this.createNetworkAclRule(this.networkAclPrivate, SUBNET_TYPE.PRIVATE, BOUND_TYPE.IN_BOUND)
-        this.networkAclRulePrivateOutbound = this.createNetworkAclRule(this.networkAclPrivate, SUBNET_TYPE.PRIVATE, BOUND_TYPE.ON_BOUND)
+        this.networkAclRulePrivateInbound = this.createNetworkAclRule(this.networkAclPrivate, SUBNET_TYPE.PRIVATE, FLOW_DIRECTION.IN_BOUND)
+        this.networkAclRulePrivateOutbound = this.createNetworkAclRule(this.networkAclPrivate, SUBNET_TYPE.PRIVATE, FLOW_DIRECTION.ON_BOUND)
 
 
     }
@@ -112,10 +111,10 @@ export default class NetworkingComponent extends ComponentResource {
 
     // Create subnet resource
     private createSubnetResources(cidr: pulumi.Input<string[]>, type: string): pulumi.Output<aws.ec2.Subnet[]> {
-        const { azs, tags } = this.config
+        const { availabilityZones, tags } = this.config
         const vpcId = this.vpc.id
 
-        return pulumi.all([cidr, azs]).apply(([subnets, azs]) => {
+        return pulumi.all([cidr, availabilityZones]).apply(([subnets, azs]) => {
             const subnetResources = subnets.map((cidrBlock, index) => {
                 const nameSubnet = `${this.name}-${type}-${index}`
                 return new aws.ec2.Subnet(nameSubnet, {
@@ -219,7 +218,7 @@ export default class NetworkingComponent extends ComponentResource {
                 cidrBlock: "0.0.0.0/0"
             }
 
-            if (egress === BOUND_TYPE.ON_BOUND) {
+            if (egress === FLOW_DIRECTION.ON_BOUND) {
                 args.egress = true
             }
 
