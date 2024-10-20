@@ -4,6 +4,8 @@
 
 This `NetworkingComponent` class, built with Pulumi and AWS SDK, is designed to create and manage an AWS Virtual Private Cloud (VPC) with associated resources such as subnets, route tables, NAT gateways, and flow logs. It allows for flexible configuration by accepting various parameters, enabling the creation of public/private subnets, NAT gateway, and VPC flow logs as needed.
 
+![Networking](docs/images/networking.svg)
+
 ## Installation
 
 To use this component, ensure you have Pulumi and the AWS SDK installed.
