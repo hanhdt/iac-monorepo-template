@@ -1,9 +1,9 @@
 export const SUBNET_TYPE = {
-    "PUBLIC": "PUBLIC",
-    "PRIVATE": "PRIVATE"
+    "PUBLIC": "public",
+    "PRIVATE": "private"
 }
 
 export const FLOW_DIRECTION = {
-    "IN_BOUND": "IN_BOUND",
-    "ON_BOUND": "ON_BOUND"
+    "IN_BOUND": "in-bound",
+    "ON_BOUND": "out-bound"
 }

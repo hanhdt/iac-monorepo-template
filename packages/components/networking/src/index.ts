@@ -10,7 +10,8 @@ interface argsInterface {
     privateSubnets: pulumi.Input<string[]>;
     publicSubnets: pulumi.Input<string[]>;
 
-    enableNatGateway: pulumi.Input<boolean>;
+    enableNatGateway?: pulumi.Input<boolean>;
+    enableFlowLogs?: pulumi.Input<boolean>;
 
     tags?: {
         [key: string]: pulumi.Input<string>;
@@ -22,6 +23,7 @@ export default class NetworkingComponent extends pulumi.ComponentResource {
     public readonly config: argsInterface;
     public readonly vpc: aws.ec2.Vpc;
     public readonly internetGateway: aws.ec2.InternetGateway;
+
     // Public
     public readonly subnetsPublic: pulumi.Output<aws.ec2.Subnet[]>;
     public readonly routeTablePublic: aws.ec2.RouteTable;
@@ -40,34 +42,47 @@ export default class NetworkingComponent extends pulumi.ComponentResource {
     public readonly networkAclRulePrivateInbound: pulumi.Output<aws.ec2.NetworkAclRule>
     public readonly networkAclRulePrivateOutbound: pulumi.Output<aws.ec2.NetworkAclRule>
 
+    // Nat
+    public readonly natGateway?: pulumi.Output<aws.ec2.NatGateway>
+    public readonly routePrivateNatGateway?: pulumi.Output<aws.ec2.Route>
+
 
     constructor(name: string, args: argsInterface, opts?: pulumi.ComponentResourceOptions) {
-        super("custom:networking:VPC", name, {}, opts);
+        super("custom:networking:VPC", name.toLowerCase(), {}, opts);
         this.config = args;
-        this.name = name;
+        this.name = name.toLowerCase();
 
         this.vpc = this.createVPC()
         this.internetGateway = this.createInternetGateway()
 
         // Public
-        this.subnetsPublic = this.createSubnetResources(args.publicSubnets, SUBNET_TYPE.PUBLIC)
-        this.routeTablePublic = this.createRouteTableResource(SUBNET_TYPE.PUBLIC)
-        this.routePublic = this.createRouteResource(this.routeTablePublic, SUBNET_TYPE.PUBLIC)
+        this.subnetsPublic = this.createSubnet(args.publicSubnets, SUBNET_TYPE.PUBLIC)
+        this.routeTablePublic = this.createRouteTable(SUBNET_TYPE.PUBLIC)
+        this.routePublic = this.createRoute(this.routeTablePublic, SUBNET_TYPE.PUBLIC)
         this.routeTableAssociationPublic = this.createRouteTableAssociation(this.subnetsPublic, this.routeTablePublic, SUBNET_TYPE.PUBLIC)
         this.networkAclPublic = this.createNetworkAcl(this.subnetsPublic, SUBNET_TYPE.PUBLIC)
         this.networkAclRulePublicInbound = this.createNetworkAclRule(this.networkAclPublic, SUBNET_TYPE.PUBLIC, FLOW_DIRECTION.IN_BOUND)
         this.networkAclRulePublicOutbound = this.createNetworkAclRule(this.networkAclPublic, SUBNET_TYPE.PUBLIC, FLOW_DIRECTION.ON_BOUND)
 
         // Private
-        this.subnetsPrivate = this.createSubnetResources(args.privateSubnets, SUBNET_TYPE.PRIVATE)
-        this.routeTablePrivate = this.createRouteTableResource(SUBNET_TYPE.PRIVATE)
-        // this.routePrivate = this.createRouteResource(this.routeTablePrivate, SUBNET_TYPE.PRIVATE)
+        this.subnetsPrivate = this.createSubnet(args.privateSubnets, SUBNET_TYPE.PRIVATE)
+        this.routeTablePrivate = this.createRouteTable(SUBNET_TYPE.PRIVATE)
+        // this.routePrivate = this.createRoute(this.routeTablePrivate, SUBNET_TYPE.PRIVATE)
         this.routeTableAssociationPrivate = this.createRouteTableAssociation(this.subnetsPrivate, this.routeTablePrivate, SUBNET_TYPE.PRIVATE)
         this.networkAclPrivate = this.createNetworkAcl(this.subnetsPrivate, SUBNET_TYPE.PRIVATE)
         this.networkAclRulePrivateInbound = this.createNetworkAclRule(this.networkAclPrivate, SUBNET_TYPE.PRIVATE, FLOW_DIRECTION.IN_BOUND)
         this.networkAclRulePrivateOutbound = this.createNetworkAclRule(this.networkAclPrivate, SUBNET_TYPE.PRIVATE, FLOW_DIRECTION.ON_BOUND)
 
+        // NAT Gateway
+        if (args.enableNatGateway) {
+            this.natGateway = this.createNatGateway(this.subnetsPublic)
+            this.routePrivateNatGateway = this.createRoutePrivateNatGateway(this.natGateway, this.routeTablePrivate)
+        }
 
+        // Flow Logs
+        if (args.enableFlowLogs) {
+            this.createFlowLogs()
+        }
     }
 
     // Create a VPC
@@ -110,12 +125,12 @@ export default class NetworkingComponent extends pulumi.ComponentResource {
     }
 
     // Create subnet resource
-    private createSubnetResources(cidr: pulumi.Input<string[]>, type: string): pulumi.Output<aws.ec2.Subnet[]> {
+    private createSubnet(cidrs: pulumi.Input<string[]>, type: string): pulumi.Output<aws.ec2.Subnet[]> {
         const { availabilityZones, tags } = this.config
         const vpcId = this.vpc.id
 
-        return pulumi.all([cidr, availabilityZones]).apply(([subnets, azs]) => {
-            const subnetResources = subnets.map((cidrBlock, index) => {
+        return pulumi.all([cidrs, availabilityZones]).apply(([cidrs, azs]) => {
+            const subnetResources = cidrs.map((cidrBlock, index) => {
                 const nameSubnet = `${this.name}-${type}-${index}`
                 return new aws.ec2.Subnet(nameSubnet, {
                     vpcId: vpcId,
@@ -133,7 +148,7 @@ export default class NetworkingComponent extends pulumi.ComponentResource {
     }
 
     // create route table resource
-    private createRouteTableResource(type: string): aws.ec2.RouteTable {
+    private createRouteTable(type: string): aws.ec2.RouteTable {
         const nameRouteTable = `${this.name}-${type}-rt`
         const { tags } = this.config
 
@@ -147,7 +162,7 @@ export default class NetworkingComponent extends pulumi.ComponentResource {
     }
 
     // create route resource
-    private createRouteResource(routeTable: aws.ec2.RouteTable, type: string): aws.ec2.Route {
+    private createRoute(routeTable: aws.ec2.RouteTable, type: string): aws.ec2.Route {
         const nameRouteTable = `${this.name}-${type}-rt`
         let customArgs: aws.ec2.RouteArgs = {
             routeTableId: routeTable.id,
@@ -226,6 +241,72 @@ export default class NetworkingComponent extends pulumi.ComponentResource {
                 name,
                 args
             )
+        })
+    }
+
+    // Create a Nat Gateway
+    private createNatGateway(subnets: pulumi.Output<aws.ec2.Subnet[]>): pulumi.Output<aws.ec2.NatGateway> {
+        const { tags } = this.config
+
+        return pulumi.all([subnets]).apply(([subnets]) => {
+            const natEip = new aws.ec2.Eip(`${this.name}-eip`)
+            const name = `${this.name}-nat`
+
+            return new aws.ec2.NatGateway(
+                name,
+                {
+                    subnetId: subnets[0].id,
+                    allocationId: natEip.id,
+                    tags: {
+                        ...tags,
+                        Name: name
+                    }
+                }
+            )
+        })
+    }
+
+    //  Create a Route for Private to NAT
+    private createRoutePrivateNatGateway(nat: pulumi.Output<aws.ec2.NatGateway>, privateRoute: aws.ec2.RouteTable): pulumi.Output<aws.ec2.Route> {
+        return pulumi.output(nat).apply((nat) => {
+            const name = `${this.name}-route-nat-gateway`
+
+            return new aws.ec2.Route(
+                name,
+                {
+                    natGatewayId: nat.id,
+                    routeTableId: privateRoute.id,
+                    destinationCidrBlock: "0.0.0.0/0"
+                }
+            )
+        })
+    }
+
+    // Create Flow logs for VPC
+    private createFlowLogs(): aws.ec2.FlowLog {
+        // Create role.
+        const role = new aws.iam.Role(`${this.name}-flow-log-role`, {
+            assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal({
+                Service: "vpc-flow-logs.amazonaws.com"
+            })
+        })
+
+        // Attach policy to allow log to log to cloudwatch
+        new aws.iam.RolePolicyAttachment(`${this.name}-log-role-rolicy`, {
+            role: role.name,
+            policyArn: aws.iam.ManagedPolicies.CloudWatchLogsFullAccess
+        })
+
+        // Create log group on Cloudwatch to store Flow Logs
+        const logGroup = new aws.cloudwatch.LogGroup(`${this.name}-vpc-flow-logs-log-group`)
+
+        // Create Flow logs for VPC
+        return new aws.ec2.FlowLog(`${this.name}-vpc-flow-logs`, {
+            vpcId: this.vpc.id,
+            trafficType: "ALL",
+            logDestinationType: "cloud-watch-logs",
+            logDestination: logGroup.arn,
+            iamRoleArn: role.arn
         })
     }
 }
