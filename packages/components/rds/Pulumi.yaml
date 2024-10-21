@@ -1,0 +1,7 @@
+name: rds-component
+description: Infrastructure for the RDS database component in the monorepo
+main: src/index.ts
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

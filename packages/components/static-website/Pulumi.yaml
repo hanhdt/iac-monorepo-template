@@ -1,0 +1,7 @@
+name: static-website-component
+description: Infrastructure for the static website component in the monorepo
+main: src/index.ts
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
