@@ -4,11 +4,14 @@
   "version": "0.0.1",
   "exports": {
     "./*": [
-      "./src/index.ts",
-      "./src/*.ts"
+      "./src/index.ts"
     ]
   },
-  "dependencies": {},
+  "main": "./index.ts",
+  "dependencies": {
+    "@pulumi/aws": "^6.56.1",
+    "@pulumi/pulumi": "^3.137.0"
+  },
   "devDependencies": {
     "@types/node": "^22.7.5"
   }
